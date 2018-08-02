@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Countdown.CountdownActivity">
+
+    <TextView
+        android:id="@+id/txt_countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:text="00:00"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="60sp" />
+
+    <Button
+        android:id="@+id/btn_startPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_countdown"
+        android:layout_centerHorizontal="true"
+        android:text="start" />
+
+    <Button
+        android:id="@+id/btn_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_startPause"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="15dp"
+        android:text="reset"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:layout_marginLeft="15dp" />
+
+    <EditText
+        android:id="@+id/edit_time"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:hint="minutes"
+        android:inputType="number"
+        android:maxLength="4"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edit_time"
+        android:layout_alignRight="@+id/edit_time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:text="set" />
+
+
+</RelativeLayout>
