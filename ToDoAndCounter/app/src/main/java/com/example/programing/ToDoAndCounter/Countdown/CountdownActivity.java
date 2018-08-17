@@ -1,9 +1,14 @@
 package com.example.programing.ToDoAndCounter.Countdown;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -11,7 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.programing.ToDoAndCounter.MainActivity;
 import com.example.programing.ToDoAndCounter.R;
+import com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.ListDataActivity;
 
 import java.util.Locale;
 
@@ -27,11 +34,16 @@ public class CountdownActivity extends AppCompatActivity {
     private long setTimeMillis;
     private long timeLeft;
     private long timeEnd;
+    public static final String TAG="ListDataActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown);
+
+        getSupportActionBar().setTitle("Countdown Timer");  // provide compatibility to all the versions
+        //this method of title changing overrites anything you may have in the layout
 
         setTimeInput = findViewById(R.id.edit_time);
         txtCountdown = findViewById(R.id.txt_countdown);
@@ -96,31 +108,24 @@ public class CountdownActivity extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     timeRunning=false;
-                    //btnStartPause.setText("start");
                     updateElements();
-                    //btnStartPause.setVisibility(View.INVISIBLE);
-                    //btnReset.setVisibility(View.VISIBLE);
                 }
 
             }.start();
             timeRunning=true;
-            //btnStartPause.setText("pause");
-            updateElements(); //btnReset.setVisibility(View.INVISIBLE);
+            updateElements();
         }
 
         private void pauseCounter () {
             countTimer.cancel();
             timeRunning=false;
-            //btnStartPause.setText("start");
-            updateElements(); //btnReset.setVisibility(View.VISIBLE);
+            updateElements();
         }
 
         private void resetCounter () {
             timeLeft= setTimeMillis;
             updateCountText();
             updateElements();
-            //btnReset.setVisibility(View.INVISIBLE);
-            //btnStartPause.setVisibility(View.VISIBLE);
         }
 
         private void updateCountText () {
@@ -131,12 +136,11 @@ public class CountdownActivity extends AppCompatActivity {
             String timeFormated;
 
             if(hours>0){
-
                 timeFormated=String.format(Locale.getDefault(),"%d:%02d:%02d",hours,minutes,seconds);
             }
             else {
                 timeFormated = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-            }
+                 }
             txtCountdown.setText(timeFormated);
         }
 
@@ -158,11 +162,13 @@ public class CountdownActivity extends AppCompatActivity {
                     btnStartPause.setVisibility(View.VISIBLE);
                 }
                 if(timeLeft< setTimeMillis){
-                    btnReset.setVisibility(View.VISIBLE);
+
+                        btnReset.setVisibility(View.VISIBLE);
                 }
                 else{
                     btnReset.setVisibility(View.INVISIBLE);
                 }
+
             }
         }
 
@@ -214,10 +220,40 @@ public class CountdownActivity extends AppCompatActivity {
                 timeRunning=false;
                 updateElements();
                 updateCountText();
+                if (timeLeft==4500){
+                    Log.d(TAG,"notification here");
+                }
             }
             else{
                 startCounter();
             }
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuinf=getMenuInflater();
+        menuinf.inflate(R.menu.navigation, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                Intent gohome=new Intent(this,MainActivity.class);
+                startActivity(gohome);
+                return true;
+            case R.id.nav_todo:
+                Intent gotodo=new Intent(this,ListDataActivity.class);
+                startActivity(gotodo);
+                return true;
+            case R.id.nav_count:
+                Intent gocount=new Intent(this,CountdownActivity.class);
+                startActivity(gocount);
+                return true;
+        }
+        return false;
     }
 }

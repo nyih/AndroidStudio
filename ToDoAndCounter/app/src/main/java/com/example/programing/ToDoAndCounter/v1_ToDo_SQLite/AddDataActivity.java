@@ -14,31 +14,34 @@ public class AddDataActivity extends AppCompatActivity {
     private static final String TAG="AddDataActivity";
     SQLiteHelper dbHelper;
     private Button btnAdd, btnView;
-    private EditText editText;
+    private EditText editText, editNote;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sql_add_layout);
         editText=(EditText) findViewById(R.id.editText);
+        editNote=(EditText) findViewById(R.id.editNote);
         btnAdd=(Button) findViewById(R.id.btnAdd);
-        btnView=(Button) findViewById(R.id.btnView);
+    //    btnView=(Button) findViewById(R.id.btnView);
         dbHelper=new SQLiteHelper(this);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String newEntry=editText.getText().toString();
+                String newNote=editNote.getText().toString();
                 if(editText.length()!=0){
-                    AddData(newEntry);
+                    AddData(newEntry, newNote);
                     editText.setText("");
+                    editNote.setText("");
                 }
                 else{
                     toastMessage("You must write something in the text field");
                 }
             }
         });
-
+/*
         btnView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -46,13 +49,16 @@ public class AddDataActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        */
     }
 
-    public void AddData(String newEntry){
-        boolean insertData=dbHelper.addData(newEntry);
+    public void AddData(String newEntry, String newNote){
+        boolean insertData=dbHelper.addData(newEntry, newNote);
 
         if(insertData){
             toastMessage("Data inserted successfully");
+            Intent intent=new Intent(AddDataActivity.this,ListDataActivity.class);
+            startActivity(intent);
         }
         else{
             toastMessage("Did you see where that data go?");

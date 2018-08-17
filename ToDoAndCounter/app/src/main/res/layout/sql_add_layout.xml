@@ -13,12 +13,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout1">
+
         <EditText
-            android:layout_marginTop="100dp"
-            android:textAlignment="center"
+            android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/editText"/>
+            android:layout_centerVertical="true"
+            android:hint="Task Name"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/editNote"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+            android:hint="Extra information"
+            android:textAlignment="center" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -28,18 +39,12 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_marginLeft="70dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/btnAdd"
-            android:text="Add"/>
-        <Button
-            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnView"
-            android:text="View Data"
-            android:layout_toRightOf="@+id/btnAdd"/>
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Add" />
 
     </RelativeLayout>
 

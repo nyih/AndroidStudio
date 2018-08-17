@@ -15,11 +15,12 @@ public class EditDataActivity extends AppCompatActivity {
     private static final String TAG = "EditDataActivity";
 
     private Button btnSave,btnDelete,btnViewData;
-    private EditText editable_item;
+    private EditText editable_item,editable_note;
 
     SQLiteHelper dbHelper;
 
     private String selectedName;
+    private String selectedNote;
     private int selectedID;
 
     @Override
@@ -28,28 +29,41 @@ public class EditDataActivity extends AppCompatActivity {
         setContentView(R.layout.sql_edit_layout);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnDelete = (Button) findViewById(R.id.btnDelete);
-        btnViewData = (Button) findViewById(R.id.btnView);
+        //btnViewData = (Button) findViewById(R.id.btnView);
         editable_item = (EditText) findViewById(R.id.editable_item);
+        editable_note = (EditText) findViewById(R.id.editable_note);
         dbHelper = new SQLiteHelper(this);
+
+        getSupportActionBar().setTitle("Change or delete your task");  // provide compatibility to all the versions
 
         //get the intent extra from the ListDataActivity
         Intent receivedIntent = getIntent();
+        Intent receivedIntent2 = getIntent();
 
-        //now get the itemID we passed as an extra
+        //get the itemID we passed as an extra
         selectedID = receivedIntent.getIntExtra("id",-1); //NOTE: -1 is just the default value
 
-        //now get the name we passed as an extra
+        //get the name we passed as an extra
         selectedName = receivedIntent.getStringExtra("name");
+
+        //get the name we passed as an extra
+        selectedNote = receivedIntent2.getStringExtra("note");
 
         //set the text to show the current selected name
         editable_item.setText(selectedName);
+        editable_note.setText(selectedNote);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = editable_item.getText().toString();
+                String inote = editable_note.getText().toString();
                 if(!item.equals("")){
                     dbHelper.updateName(item,selectedID,selectedName);
+                    dbHelper.updateNote(inote,selectedID,selectedNote);
+                    toastMessage("Task updated in the database");
+                    Intent intent = new Intent(EditDataActivity.this, ListDataActivity.class);
+                    startActivity(intent);
                 }else{
                     toastMessage("You must write something");
                 }
@@ -62,9 +76,11 @@ public class EditDataActivity extends AppCompatActivity {
                 dbHelper.deleteName(selectedID,selectedName);
                 editable_item.setText("");
                 toastMessage("Task removed from database");
+                Intent intent = new Intent(EditDataActivity.this, ListDataActivity.class);
+                startActivity(intent);
             }
         });
-
+/*
         btnViewData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +88,7 @@ public class EditDataActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+*/
     }
 
     private void toastMessage(String message){

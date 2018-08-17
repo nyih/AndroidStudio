@@ -10,9 +10,10 @@ import android.util.Log;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
-    private static final String TABLE_NAME = "tasks_to_do";
+    private static final String TABLE_NAME = "tasks_to_doo";
     private static final String colID = "ID";
     private static final String colName = "name";
+    private static final String colNote = "note";
     //private static final String colPrio = "priority";
 
 
@@ -23,7 +24,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                colName +" TEXT)";
+                colName +" TEXT, " + colNote +" TEXT)";
         db.execSQL(createTable);
     }
 
@@ -33,12 +34,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String item) {
+    public boolean addData(String item, String inote) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(colName, item);
+        contentValues.put(colNote, inote);
 
-        Log.d(TAG, "addData: Adding " + item + " to " + TABLE_NAME);
+        Log.d(TAG, "addData: Adding " + item + " and " + inote + " to " + TABLE_NAME);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 
@@ -87,6 +89,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 " AND " + colName + " = '" + oldName + "'";
         Log.d(TAG, "updateName: query: " + query);
         Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void updateNote(String newNote, int id, String oldNote){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + colNote +
+                " = '" + newNote + "' WHERE " + colID + " = '" + id + "'" +
+                " AND " + colNote + " = '" + oldNote + "'";
+        Log.d(TAG, "updateNote: query: " + query);
+        Log.d(TAG, "updateNote: Setting note to " + newNote);
         db.execSQL(query);
     }
 

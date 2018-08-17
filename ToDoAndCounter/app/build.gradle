@@ -37,6 +37,9 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.0"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
 
+//dependency for notification
+    compile "com.android.support:support-v4:27.1.1"
+
     //Testing
     // Instrumentation dependencies use androidTestCompile
     testImplementation 'junit:junit:4.12'

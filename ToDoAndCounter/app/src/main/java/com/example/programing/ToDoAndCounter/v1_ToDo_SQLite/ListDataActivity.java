@@ -6,14 +6,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.programing.ToDoAndCounter.Countdown.CountdownActivity;
+import com.example.programing.ToDoAndCounter.MainActivity;
 import com.example.programing.ToDoAndCounter.R;
 
 import java.util.ArrayList;
@@ -24,6 +30,7 @@ public class ListDataActivity extends AppCompatActivity{
     SQLiteHelper dbHelper;
     private ListView listView;
     private Button btnAddTask;
+    private TextView mTextMessage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +41,11 @@ public class ListDataActivity extends AppCompatActivity{
         btnAddTask=(Button) findViewById(R.id.btnAddTask);
         dbHelper=new SQLiteHelper(this);
 
+        getSupportActionBar().setTitle("To do list");  // provide compatibility to all the versions
+
         populateListView();
+        mTextMessage = (TextView) findViewById(R.id.message);
+
 
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +66,7 @@ public class ListDataActivity extends AppCompatActivity{
             //get the value from database in collumn
             //than adds it to the array
             listData.add(data.getString(1)); //in this case, COL1
+            //listData.add(data.getString(2)); //in this case, COL2
         }
         //create list adapter and set adapter
         ListAdapter adapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,listData);
@@ -88,5 +100,31 @@ public class ListDataActivity extends AppCompatActivity{
 
     private void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuinf=getMenuInflater();
+        menuinf.inflate(R.menu.navigation, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                Intent gohome=new Intent(this,MainActivity.class);
+                startActivity(gohome);
+                return true;
+            case R.id.nav_todo:
+                Intent gotodo=new Intent(this,ListDataActivity.class);
+                startActivity(gotodo);
+                return true;
+            case R.id.nav_count:
+                Intent gocount=new Intent(this,CountdownActivity.class);
+                startActivity(gocount);
+                return true;
+        }
+        return false;
     }
 }

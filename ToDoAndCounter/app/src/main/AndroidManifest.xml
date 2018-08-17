@@ -22,8 +22,15 @@
         </activity>
         <activity android:name="com.example.programing.ToDoAndCounter.Countdown.CountdownActivity"/>
         <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.ListDataActivity"/>
-        <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.AddDataActivity"/>
-        <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.EditDataActivity"/>
+        <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.AddDataActivity"
+            android:label="Add a new task"
+            android:icon="@drawable/ic_randomlogo"
+            android:parentActivityName=".v1_ToDo_SQLite.ListDataActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".v1_ToDo_SQLite.ListDataActivity"/>
+        </activity>
+        <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.EditDataActivity"
+            android:parentActivityName=".v1_ToDo_SQLite.ListDataActivity"/>
 
     </application>
 
