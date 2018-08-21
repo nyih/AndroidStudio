@@ -23,7 +23,6 @@ public class AddDataActivity extends AppCompatActivity {
         editText=(EditText) findViewById(R.id.editText);
         editNote=(EditText) findViewById(R.id.editNote);
         btnAdd=(Button) findViewById(R.id.btnAdd);
-    //    btnView=(Button) findViewById(R.id.btnView);
         dbHelper=new SQLiteHelper(this);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -41,15 +40,6 @@ public class AddDataActivity extends AppCompatActivity {
                 }
             }
         });
-/*
-        btnView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(AddDataActivity.this,ListDataActivity.class);
-                startActivity(intent);
-            }
-        });
-        */
     }
 
     public void AddData(String newEntry, String newNote){

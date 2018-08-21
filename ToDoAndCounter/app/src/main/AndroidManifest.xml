@@ -20,15 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.example.programing.ToDoAndCounter.Countdown.CountdownActivity"/>
-        <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.ListDataActivity"/>
+        <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.ListDataActivity"
+                  android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".MainActivity"/>
+        </activity>
+
         <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.AddDataActivity"
             android:label="Add a new task"
-            android:icon="@drawable/ic_randomlogo"
-            android:parentActivityName=".v1_ToDo_SQLite.ListDataActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".v1_ToDo_SQLite.ListDataActivity"/>
-        </activity>
+            android:parentActivityName=".v1_ToDo_SQLite.ListDataActivity"/>
         <activity android:name="com.example.programing.ToDoAndCounter.v1_ToDo_SQLite.EditDataActivity"
             android:parentActivityName=".v1_ToDo_SQLite.ListDataActivity"/>
 

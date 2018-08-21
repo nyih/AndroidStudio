@@ -42,7 +42,8 @@ public class CountdownActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown);
 
-        getSupportActionBar().setTitle("Countdown Timer");  // provide compatibility to all the versions
+        getSupportActionBar().setTitle("Countdown Timer");
+        // provide compatibility to all the versions
         //this method of title changing overrites anything you may have in the layout
 
         setTimeInput = findViewById(R.id.edit_time);

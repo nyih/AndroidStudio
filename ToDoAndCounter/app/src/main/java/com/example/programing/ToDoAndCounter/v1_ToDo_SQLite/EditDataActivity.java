@@ -29,7 +29,6 @@ public class EditDataActivity extends AppCompatActivity {
         setContentView(R.layout.sql_edit_layout);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnDelete = (Button) findViewById(R.id.btnDelete);
-        //btnViewData = (Button) findViewById(R.id.btnView);
         editable_item = (EditText) findViewById(R.id.editable_item);
         editable_note = (EditText) findViewById(R.id.editable_note);
         dbHelper = new SQLiteHelper(this);
@@ -80,15 +79,6 @@ public class EditDataActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        btnViewData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EditDataActivity.this, ListDataActivity.class);
-                startActivity(intent);
-            }
-        });
-*/
     }
 
     private void toastMessage(String message){

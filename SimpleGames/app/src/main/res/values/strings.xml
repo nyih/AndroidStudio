@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Simple Games</string>
+    <string name="info">Please, use the menu to access the games,
+        eventually there will be something here</string>
+    <string name="tictac">Tic Tac Toe</string>
+    <string name="title_home">Home</string>
+    <string name="title_tictac">Tic Tac Toe Game</string>
+</resources>
