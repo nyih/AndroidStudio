@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.exercises.programing.simplegames.TicTacToe.TicMainActivity;
+import com.exercises.programing.simplegames.hangingman.HangMainActivity;
+import com.exercises.programing.simplegames.tictactoe.TicMainActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_tictac:
                 Intent gotodo=new Intent(this, TicMainActivity.class);
                 startActivity(gotodo);
+                return true;
+            case R.id.nav_hang:
+                Intent gohang=new Intent(this, HangMainActivity.class);
+                startActivity(gohang);
                 return true;
         }
         return false;
