@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".hangingman.HangOverActivity">
+
+        <ImageView
+            android:id="@+id/imgViewOver"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_alignParentBottom="true"
+            app:srcCompat="@drawable/gameover"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="42dp" />
+
+        <TextView
+            android:id="@+id/txtview_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/marging"
+            android:layout_marginBottom="@dimen/marging"
+            android:text="points"
+            android:textSize="40sp" />
+
+    <EditText
+        android:id="@+id/edtxt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtview_points"
+        android:digits="@string/hang_alphabet"
+        android:ems="11"
+        android:hint="Insert your name"
+        android:inputType="textPersonName"
+        android:textSize="30sp" />
+        <!--
+        digits is an attribute to limit what may be accepted to this text input.
+        Only the characters inserted there are going to be accepted. Anything else will not be inputted.
+        In this case, the entire alphabet in uppercase AND lowercase, stored in the strings file.
+        maxLength means the number of characters accepted by this text input.
+        ems refers to the space the letter m (the widest letter of the alphabet) occupies
+        using the spacing of 1 ems for the empty text input means the position of things related to it
+        will not change, so said objects will not wiggle in space.
+        -->
+
+        <Button
+            android:id="@+id/btn_check"
+            android:onClick="saveScore"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/edtxt_name"
+            android:text="Save Score" />
+
+    </RelativeLayout>
