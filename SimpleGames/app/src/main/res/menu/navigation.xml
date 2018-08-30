@@ -4,11 +4,9 @@
     <item
         android:id="@+id/nav_home"
         android:title="@string/title_home" />
+
     <item
         android:id="@+id/nav_tictac"
         android:title="@string/title_tictac" />
-    <item
-        android:id="@+id/nav_hang"
-        android:title="@string/title_hang" />
 
 </menu>

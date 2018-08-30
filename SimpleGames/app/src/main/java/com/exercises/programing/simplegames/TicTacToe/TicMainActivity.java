@@ -1,4 +1,4 @@
-package com.exercises.programing.simplegames.tictactoe;
+package com.exercises.programing.simplegames.TicTacToe;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

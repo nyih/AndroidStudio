@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.exercises.programing.simplegames">
 
     <application
@@ -17,34 +16,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".tictactoe.TicMainActivity"
+            android:name=".TicTacToe.TicMainActivity"
             android:label="@string/tictac"
-            android:parentActivityName=".MainActivity"
-            tools:targetApi="jelly_bean" />
+            android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".hangingman.HangMainActivity"
-            android:label="@string/title_hang"
-            android:parentActivityName=".MainActivity"/>
-
-        <activity android:name=".hangingman.HangGameActivity"
-            android:parentActivityName=".hangingman.HangMainActivity"/>
-
-        <activity android:name=".hangingman.HangOverActivity"
-            android:label="@string/title_hang"
-            android:parentActivityName=".hangingman.HangMainActivity"/>
-
-        <activity android:name=".hangingman.HangMultiplayerActivity"
-            android:label="@string/title_hang"
-            android:parentActivityName=".hangingman.HangMainActivity"/>
-
-        <activity android:name=".hangingman.HangMultiActivity"
-            android:label="@string/title_hang"
-            android:parentActivityName=".hangingman.HangMultiplayerActivity"/>
-
-        <activity
-            android:name=".hangingman.HangScoresActivity"
-            android:label="@string/title_hang"
-            android:parentActivityName=".hangingman.HangMainActivity" />
     </application>
 
 </manifest>
