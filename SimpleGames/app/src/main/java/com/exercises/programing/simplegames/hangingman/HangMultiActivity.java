@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +22,13 @@ public class HangMultiActivity extends AppCompatActivity {
     String checkFail = "";
     int guessedcounter = 0;
     int failcounter = 0;
+    Button btn_check;
+    // this button doesn't require onClicListener because already has onClic on the layout
+    TextView txtview_hang;
+    EditText edtxt_char;
+    TextView txtviewFailed;
+    CharSequence txtfailed;
+    LinearLayout layLetters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +40,14 @@ public class HangMultiActivity extends AppCompatActivity {
         toastMessage("To test the app only: "+wordSent);
         createTextViews(wordSent);
         gameWord = wordSent.toUpperCase();
+        btn_check = findViewById(R.id.btn_check);
+        txtview_hang = findViewById(R.id.txtview_hang);
+        edtxt_char = findViewById(R.id.edtxt_char);
     }
 
     public void createTextViews(String word) {
-        LinearLayout layLetters = (LinearLayout) findViewById(R.id.layLetters);
-        int padding = getResources().getDimensionPixelSize(R.dimen.txt_padding);
+        layLetters = (LinearLayout) findViewById(R.id.layLetters);
+        int padding = getResources().getDimensionPixelSize(R.dimen.txt_radio);
 
         for (int i = 0 ; i < word.length(); i++){
             TextView tv = new TextView(this);
@@ -51,7 +63,6 @@ public class HangMultiActivity extends AppCompatActivity {
         EditText x = findViewById(R.id.edtxt_char);
         String letter = x.getText().toString();
         Log.d("MYLOG", "The letter introduced is " + letter);
-
         x.setText("");
 
         if (letter.length() == 1){
@@ -72,7 +83,7 @@ public class HangMultiActivity extends AppCompatActivity {
         // charAt is needed so the app is able to search inside the words for the letters,
         // like looking for an item in an array list.
 
-        LinearLayout layLetters = findViewById(R.id.layLetters);
+        layLetters = findViewById(R.id.layLetters);
         String repeated = null;
         Boolean hasRepeated = false;
 
@@ -105,7 +116,7 @@ public class HangMultiActivity extends AppCompatActivity {
                     checkGuess = insertedLetter;
                     guessedcounter++;
                     Log.d("MYLOG", "Check guess is: " + checkGuess);
-                    Log.d("MYLOG", "Previous guess 2: " + repeated);
+                    Log.d("MYLOG", "Previous guess: " + repeated);
                 }
             }
         }
@@ -121,7 +132,7 @@ public class HangMultiActivity extends AppCompatActivity {
     }
 
     public void letterFailed(String letterFail) {
-        TextView txtviewFailed = findViewById(R.id.txtview_guess);
+        txtviewFailed = findViewById(R.id.txtview_guess);
         String prevFail = txtviewFailed.getText().toString();
 
         failcounter++;
@@ -157,15 +168,26 @@ public class HangMultiActivity extends AppCompatActivity {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         ImageView img = findViewById(R.id.imageView);
-        String imgID = "hang" + failcounter;
+        String imgID = "ic_hang" + failcounter;
         int resID = getResources().getIdentifier(imgID, "drawable", getPackageName());
 
         if (failcounter < 7){
             img.setImageResource(resID);
         }
         else{ // GAME OVER
-            img.setImageResource(R.drawable.gameover);
-            toastMessage("Game Over!");
+            img.setImageResource(R.drawable.ic_gameover);
+            // Stops the player from guessing after the end, WITHOUT the need of a new screen:
+            LinearLayout laystopguess = findViewById(R.id.layLetters);
+            if(laystopguess.getChildCount() > 1) {
+                laystopguess.removeAllViews();               //clean the TextView from the letters
+                TextView stopguess= new TextView(this);//dynamically create textview
+                stopguess.setTextSize(getResources().getDimension(R.dimen.txt_size));
+                stopguess.setText("GAME OVER");
+                laystopguess.addView(stopguess);              //add to the LinearLayout
+            }
+            btn_check.setVisibility(View.GONE);
+            txtview_hang.setVisibility(View.GONE);
+            edtxt_char.setVisibility(View.GONE);
         }
     }
 
@@ -178,4 +200,83 @@ public class HangMultiActivity extends AppCompatActivity {
     private void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
+
+
+    //Make sure the player won't lose progress in the game when changing from landscape to
+    //portrait view and vice versa
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        String txtguessed;
+        String testing = null;
+        for (int j=0; j < layLetters.getChildCount(); j++){
+            TextView current_txtview = (TextView) layLetters.getChildAt(j);
+            Log.d("MYLOG", "current_txtview saved: "+current_txtview.getText());
+            txtguessed = current_txtview.getText().toString();
+            if (testing == null) {
+                testing = txtguessed;
+            } else {
+                testing = String.format("%s%s", testing, txtguessed);
+            }
+        }
+        Log.d("MYLOG", "testing saved: "+testing);
+        outState.putString("testing", testing);
+
+        outState.putString("gameWord", gameWord);
+
+        TextView viewFailed = findViewById(R.id.txtview_guess);
+        CharSequence txtfailed = viewFailed.getText();
+        Log.d("MYLOG", "charsequence saved: "+txtfailed);
+        outState.putCharSequence("txtfailed", txtfailed);
+
+        outState.putInt("guessedcounter", guessedcounter);
+        outState.putInt("failcounter", failcounter);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        gameWord = savedInstanceState.getString("gameWord");
+        txtfailed = savedInstanceState.getCharSequence("txtfailed");
+        Log.d("MYLOG", "restored charsequence: "+txtfailed);
+        TextView viewFailed = findViewById(R.id.txtview_guess);
+        viewFailed.setText(txtfailed);
+        Log.d("MYLOG", "txtviewFailed saved: "+txtviewFailed);
+        failcounter = savedInstanceState.getInt("failcounter");
+
+        String testing = savedInstanceState.getString("testing");
+        Log.d("MYLOG", "testing saved: "+testing);
+        char c;
+        TextView current_txtview;
+        for (int j=0; j < layLetters.getChildCount(); j++){
+            current_txtview = (TextView) layLetters.getChildAt(j);
+            c = testing.charAt(j);
+            Log.d("MYLOG", "current_txtview saved: "+c);
+            current_txtview.setText(String.valueOf(c));
+        }
+
+        ImageView img = findViewById(R.id.imageView);
+        String imgID = "ic_hang" + failcounter;
+        int resID = getResources().getIdentifier(imgID, "drawable", getPackageName());
+        if (failcounter < 7){
+            img.setImageResource(resID);
+        }
+        if (failcounter == 7){
+            btn_check.setVisibility(View.GONE);
+            txtview_hang.setVisibility(View.GONE);
+            edtxt_char.setVisibility(View.GONE);
+            img.setImageResource(R.drawable.ic_gameover);
+
+            LinearLayout laystopguess = findViewById(R.id.layLetters);
+            if(laystopguess.getChildCount() > 1) {
+                laystopguess.removeAllViews();               //clean the TextView from the letters
+                TextView stopguess= new TextView(this);//dynamically create textview
+                stopguess.setTextSize(getResources().getDimension(R.dimen.txt_size));
+                stopguess.setText(R.string.game_over);
+                laystopguess.addView(stopguess);              //add to the LinearLayout
+            }
+        }
+    } //closes onRestore
 }

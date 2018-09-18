@@ -22,12 +22,19 @@ public class HangGameActivity extends AppCompatActivity {
     int failcounter = 0;
     int pontuation = 0;
 
+    TextView txtviewFailed;
+    CharSequence txtfailed;
+    LinearLayout layLetters;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hang_game);
-        setRandomWord();
-        toastMessage("To test the app only: "+gameWord);
+
+        if (savedInstanceState == null){
+            setRandomWord();
+            toastMessage("To test the app only: "+gameWord);
+        }
     }
 
     //retriving the letter inserted on the editText
@@ -50,13 +57,13 @@ public class HangGameActivity extends AppCompatActivity {
 
     public void checkLetter(String insertedLetter){
         char charInserted = insertedLetter.toUpperCase().charAt(0);
-        //character inserted (in this case letters)
+        // character inserted (in this case letters)
         // the inserted letter is changed to UpperCase so the user will get points for the
         // right letters despite being upper or lowercase
         // charAt is needed so the app is able to search inside the words for the letters,
         // like looking for an item in an array list.
 
-        LinearLayout layLetters = findViewById(R.id.layLetters);
+        layLetters = findViewById(R.id.layLetters);
         String repeated = null;
         Boolean hasRepeated = false;
 
@@ -82,11 +89,9 @@ public class HangGameActivity extends AppCompatActivity {
                         //that is only set inside this if to make other conditions work
                         Log.d("MYLOG", "Repeated: " + repeated);
                         toastMessage("This letter was already scored");
-                        Log.d("MYLOG", "already guessed " + current_letter);
 //THIS HERE IS BEING REPEATED SEVERAL TIMES WHEN THE WORD HAS REPEATED LETTERS:
 // x² -> if 2 R in the word, Toast appears 4 times. if 3 A in a word, Toast appears 9 times.
-// 1 for each letter repeated times 1 for each space the letter is present, I suppose -> kind of solved
-// now repeats only the same amount of times the letter is repeated. if 3 A in a word, Toast 3 times
+// 1 for each letter repeated times 1 for each space the letter is present, I suppose
                             Log.d("MYLOG", "current letter repeated: " + current_letter);
                             break;
                     }
@@ -156,17 +161,17 @@ public class HangGameActivity extends AppCompatActivity {
 
     public void clearScreen(){
         TextView txtviewFailled = (TextView) findViewById(R.id.txtview_guess);
-        LinearLayout layLetters = findViewById(R.id.layLetters);
+        layLetters = findViewById(R.id.layLetters);
         txtviewFailled.setText("");
         guessedcounter=0;
         failcounter=0;
-// Make every letter inside layLetters x again:
+        // Makes every letter inside layLetters x again:
         for (int i=0; i < layLetters.getChildCount(); i++){
             TextView current_txtview = (TextView) layLetters.getChildAt(i);
             current_txtview.setText("x ");
         }
         ImageView img = findViewById(R.id.imageView);
-        img.setImageResource(R.drawable.hang0);
+        img.setImageResource(R.drawable.ic_hang0);
     }
 
     public void letterFailed(String letterFail) {
@@ -205,7 +210,7 @@ public class HangGameActivity extends AppCompatActivity {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         ImageView img = findViewById(R.id.imageView);
-        String imgID = "hang" + failcounter;
+        String imgID = "ic_hang" + failcounter;
         int resID = getResources().getIdentifier(imgID, "drawable", getPackageName());
 
         if (failcounter < 7){
@@ -221,12 +226,77 @@ public class HangGameActivity extends AppCompatActivity {
     }
 
     public void showLettersIndex(int position, char guessed){
-        LinearLayout layLatter = findViewById(R.id.layLetters);
-        TextView txtview = (TextView) layLatter.getChildAt(position);
+        layLetters = findViewById(R.id.layLetters);
+        TextView txtview = (TextView) layLetters.getChildAt(position);
         txtview.setText(Character.toString(guessed));
     }
 
     private void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
+
+
+
+    //Make sure the player won't lose progress in the game when changing from landscape to
+    //portrait view and vice versa
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        String txtguessed;
+        String testing = null;
+        layLetters = findViewById(R.id.layLetters);
+        for (int j=0; j < layLetters.getChildCount(); j++){
+            TextView current_txtview = (TextView) layLetters.getChildAt(j);
+            Log.d("MYLOG", "current_txtview saved: "+current_txtview.getText());
+            txtguessed = current_txtview.getText().toString();
+            if (testing == null) {
+                testing = txtguessed;
+            } else {
+                testing = String.format("%s%s", testing, txtguessed);
+            }
+        }
+        Log.d("MYLOG", "testing saved: "+testing);
+        outState.putString("testing", testing);
+        outState.putString("gameWord", gameWord);
+        TextView viewFailed = findViewById(R.id.txtview_guess);
+        CharSequence txtfailed = viewFailed.getText();
+        Log.d("MYLOG", "charsequence saved: "+txtfailed);
+        outState.putCharSequence("txtfailed", txtfailed);
+        outState.putInt("guessedcounter", guessedcounter);
+        outState.putInt("failcounter", failcounter);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        gameWord = savedInstanceState.getString("gameWord");
+        //works if we have a n if in the onCreate
+        txtfailed = savedInstanceState.getCharSequence("txtfailed");
+        Log.d("MYLOG", "restored charsequence: "+txtfailed);
+        TextView viewFailed = findViewById(R.id.txtview_guess);
+        viewFailed.setText(txtfailed);
+        Log.d("MYLOG", "txtviewFailed saved: "+txtviewFailed);
+        failcounter = savedInstanceState.getInt("failcounter");
+
+        String testing = savedInstanceState.getString("testing");
+        Log.d("MYLOG", "testing saved: "+testing);
+        layLetters = findViewById(R.id.layLetters);
+        char c;
+        TextView current_txtview;
+        for (int j=0; j < layLetters.getChildCount(); j++){
+            current_txtview = (TextView) layLetters.getChildAt(j);
+            c = testing.charAt(j);
+            Log.d("MYLOG", "current_txtview saved: "+c);
+            current_txtview.setText(String.valueOf(c));
+        }
+
+        ImageView img = findViewById(R.id.imageView);
+        String imgID = "ic_hang" + failcounter;
+        int resID = getResources().getIdentifier(imgID, "drawable", getPackageName());
+        if (failcounter < 7){
+            img.setImageResource(resID);
+        }
+    } //closes onRestore
 }

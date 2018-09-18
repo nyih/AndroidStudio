@@ -1,25 +1,42 @@
 package com.exercises.programing.simplegames.tictactoe;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.exercises.programing.simplegames.R;
 
+import java.util.Random;
+
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class TicMainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    // Step 2.1 - Declare all your variables and implement your buttons on the onCreate
-    private Button[][] buttons = new Button[3][3];
-    private boolean p1_turn = true;
+    // Step 2.1 - Declare all your variables
+    protected Button[][] buttons = new Button[3][3];
+    protected boolean p1_turn = true;
     private int roundCount;
     private int p1_points;
     private int p2_points;
     private TextView txtView_p1;
     private TextView txtView_p2;
 
+    // Step 7 - Declare your new variable for the AI implementation
+    public RadioButton radio_AInope, radio_AIeasy, radio_AIhard;
+    public RadioGroup radiog;
+    public Button btnReset, btnGo;
+    public TicAIEasy aiEasy; // For when not using minimax
+    public TicAIPerfect aiHard; // For when using minimax
+    public boolean startGame = false;
+
+    // Step 2.2 - Implement your buttons on the onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +44,8 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
 
         txtView_p1 = findViewById(R.id.txtView_p1);
         txtView_p2 = findViewById(R.id.txtView_p2);
+        aiEasy = new TicAIEasy();       // Step 7
+        aiHard = new TicAIPerfect();    // Step 7
 
         for (int i=0; i<3; i++){
             //Loop information for each i until i=3, since the array length is 3
@@ -49,29 +68,104 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
 
-        Button btnReset = findViewById(R.id.btn_reset);
+        btnReset = findViewById(R.id.btn_reset);
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resetGame();
+                startGame = false;
+                Log.d("MYLOG", "startGame status: "+startGame);
                 //the line above is implemented on Step 5
             }
         });
+        // Step 7
+        btnGo = findViewById(R.id.btn_ticgo);
+        btnGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startGame = true;
+                Log.d("MYLOG", "startGame status: "+startGame);
+            }
+        });
+        radio_AInope = (RadioButton) findViewById(R.id.radio_AInope);
+        radio_AIeasy = (RadioButton) findViewById(R.id.radio_AIeasy);
+        radio_AIhard = (RadioButton) findViewById(R.id.radio_AIhard);
     }
 
     @Override
     public void onClick(View v) {
+        // Step 2.2
         //If the button in this view (! means different) does NOT equal to an empty string
         if(!((Button)v).getText().toString().equals("")){
             return;
         }
-        if (p1_turn){
-            ((Button)v).setText("X");
+        if (startGame) { // with this if the player can only play after pressing Go
+            // Step 8 - Set what will happen if one of the radios is clicked.
+// Tip: Since we need the same Method in both (aiHard and aiEasy), allow AndroidStudio
+// to create them for you in their classes (click on the red light bulb and chose create method)
+
+            if (radio_AInope.isChecked()) {
+                roundCount++;
+                Log.d("MYLOG", "startGame status: " + startGame);
+                Log.d("MYLOG", "X Round: " + roundCount);
+                if (p1_turn) {
+                    Log.d("MYLOG", "Player 1: normal");
+                    ((Button) v).setText("X");
+                }
+                else{
+                    Log.d("MYLOG", "Player 2: normal");
+                    ((Button) v).setText("O");
+                }
+                changeTurn();
+                Log.d("MYLOG", "Player 1 turn: " + p1_turn);
+            }
+
+            if (radio_AIeasy.isChecked()){
+                //roundCount++;
+                //is the bunch of if the thing blocking the autoplay without click?
+                if (p1_turn) {
+                    roundCount++;
+                    Log.d("MYLOG", "X Round: " + roundCount);
+                    Log.d("MYLOG", "Player 1: AI mode");
+                    ((Button) v).setText("X");
+                    Log.d("MYLOG", "a) Player 1 turn: " + p1_turn);
+                    changeTurn();
+                    Log.d("MYLOG", "b) Player 1 turn: " + p1_turn);
+                }
+                // For some reason, if changeTurn is left out of the ifs, the AI
+                // methods don't work properly.
+                // For some reason, if using else instead of if !(not)p1_turn, the autoplay doesn't run.
+                if (!p1_turn)  {
+                    roundCount++;
+                    Log.d("MYLOG", "O Round: " + roundCount);
+                    Log.d("MYLOG", "Player 2: AI mode");
+                    aiEasy.nextMove(this);
+                    Log.d("MYLOG", "main Player 2 turn: " + !p1_turn);
+                    //changeTurn(); //it makes odd stuff and already have inside the random working
+                    //Log.d("MYLOG", "main Player 2 turn: " + !p1_turn);
+                }
+            }
+
+            if (radio_AIhard.isChecked()){
+                if (p1_turn) {
+                    Log.d("MYLOG", "Player 1: AI hard mode");
+                    Log.d("MYLOG", "startGame status: " + startGame);
+                    ((Button) v).setText("X");
+                    roundCount++;
+                    Log.d("MYLOG", "X Round: " + roundCount);
+                    changeTurn();
+                    Log.d("MYLOG", "Player 1 turn: " + p1_turn);
+                }
+                else if (!p1_turn) {
+                    Log.d("MYLOG", "Player 2: AI hard mode");
+                    aiHard.nextMove(this);
+                    roundCount++;
+                    Log.d("MYLOG", "O Round: " + roundCount);
+                    Log.d("MYLOG", "Player 2 turn: " + !p1_turn);
+                }
+            }
         }
-        else{
-            ((Button)v).setText("O");
-        }
-        roundCount++;
+
 // Step 4 - Call the methods created on Step 3
 // The series of methods bellow check if one of the players won and, if one did or the game
 // the game got a draw, the board is resetted.
@@ -83,17 +177,30 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
                 p2_wins();
             }
         }
-        else if (roundCount==9){
+        else if (roundCount>8){
+            // if we get to the 9th turn, it's a draw because we only have 9 spaces to fill
+            // and 1 space is filled each turn, also, it'd impossible to win in the 9th turn,
+            // you get to that point because no one was able to win.
             draw();
         }
-        else{
-            //this will switch the players turn, if p1_turn is true, it'll become false
-            //and vice versa
-            p1_turn = !p1_turn;
-        }
     }
+    // Step 8 - Because we need to change turn from the AI, we create this method
+    public void changeTurn() {
+        //this will switch the players turn, if p1_turn is true, it'll become false
+        //and vice versa
+        if (checkForWin()){
+            if (p1_turn){
+                p1_wins();
+            }
+            else{
+                p2_wins();
+            }
+        }
+        p1_turn = !p1_turn;
+    }
+
     // Step 3
-    private boolean checkForWin() {
+    public boolean checkForWin() {
 
         String[][] field = new String[3][3];
         //Just like it was done for the buttons, the String fields will receive bellow different
@@ -113,6 +220,7 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
                     //AND i0 is NOT empty
                     && !field[i][0].equals("")) {
                 return true;
+                //return true if any line was created
             }
         }
         for (int i=0; i<3; i++){
@@ -120,35 +228,45 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
                     && field[0][i].equals(field[2][i])
                     && !field[0][i].equals("")) {
                 return true;
+                //return true if any column was created
             }
         }
         if (field[0][0].equals(field[1][1])
                 && field[0][0].equals(field[2][2])
                 && !field[0][0].equals("")) {
             return true;
+            //return true if diagonal (left top to right bottom) line was created
         }
         if (field[0][2].equals(field[1][1])
                 && field[0][2].equals(field[2][0])
                 && !field[0][2].equals("")) {
             return true;
+            //return true if diagonal (right top to left bottom) line was created
         }
         return false;
     }
 
 // Step 5 - Add Toasts to be a visual feedback of why the board is being resetted
 // and update the players points (or not if it's a draw)
-    private void p1_wins(){
-        p1_points++;
-        Toast.makeText(this, "Player 1 wins!", Toast.LENGTH_LONG).show();
-        updatePointsText();
-        resetBoard();
+    protected void p1_wins(){
+                p1_points++;
+                updatePointsText();
+                resetBoard();
+        Toast.makeText(this, "Player 1 wins!", LENGTH_SHORT).show();
+        Log.d("MYLOG", "---------------------------------------Player 1 Wins");
     }
 
-    private void p2_wins(){
-        p2_points++;
-        Toast.makeText(this, "Player 2 wins!", Toast.LENGTH_LONG).show();
-        updatePointsText();
-        resetBoard();
+    protected void p2_wins(){
+        Handler handler = new Handler(); // Give a delay of 1 second, it's visually more pleasant
+        handler.postDelayed(new Runnable() {
+            public void run() {
+            p2_points++;
+            updatePointsText();
+            resetBoard();
+        }}, 1000); //Allow the player to be able to see how he/she/it lost
+        Toast.makeText(this, "Player 2 wins!", LENGTH_SHORT).show();
+        Log.d("MYLOG", "---------------------------------------Player 2 Wins");
+        //OBS: Apparently Toasts cannot be displayed inside Runnables
     }
 
     private void draw(){
@@ -168,7 +286,7 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
         roundCount=0;
-        p1_turn=true;
+        Log.d("MYLOG", "Reset Round: " + roundCount);
     }
 
     private void resetGame(){

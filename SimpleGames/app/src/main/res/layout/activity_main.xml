@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg_main"
     tools:context=".MainActivity">
 
     <TextView
@@ -11,8 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/info"
-        android:textSize="22sp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="22sp" />
 
 
 

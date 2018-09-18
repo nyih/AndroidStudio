@@ -7,19 +7,9 @@
     android:background="@drawable/gradient_bg_main"
     tools:context=".hangingman.HangMainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:text="Titulo qualquer"
-        android:textSize="30sp"
-        android:textColor="@color/colorPrimaryLight"/>
-
     <Button
         android:id="@+id/btn_top"
-        android:text="Single Player"
+        android:text="@string/hang_single"
         style="@style/ButtonStyle"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
@@ -28,7 +18,7 @@
 
     <Button
         android:id="@+id/btn_mid"
-        android:text="Multi Player"
+        android:text="@string/hang_multi"
         style="@style/ButtonStyle"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
@@ -36,7 +26,7 @@
 
     <Button
         android:id="@+id/btn_bot"
-        android:text="Scores"
+        android:text="@string/hang_scores"
         style="@style/ButtonStyle"
         android:layout_width="105dp"
         android:layout_height="wrap_content"

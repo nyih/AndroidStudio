@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import com.exercises.programing.simplegames.hangingman.HangMainActivity;
 import com.exercises.programing.simplegames.tictactoe.TicMainActivity;
+import com.exercises.programing.simplegames.hangingman.HangMainActivity;
+//import com.exercises.programing.simplegames.memory.MemoryActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuinf=getMenuInflater();
+        MenuInflater menuinf = getMenuInflater();
         menuinf.inflate(R.menu.navigation, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -47,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent gohang=new Intent(this, HangMainActivity.class);
                 startActivity(gohang);
                 return true;
+                /*
+            case R.id.nav_memo:
+                Intent gomemo=new Intent(this, MemoryActivity.class);
+                startActivity(gomemo);
+                return true;
+                */
         }
         return false;
     }

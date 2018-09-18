@@ -3,10 +3,19 @@
     <string name="info">Please, use the menu to access the games,
         eventually there will be something here</string>
     <string name="tictac">Tic Tac Toe</string>
+    <string name="AInope">AI off</string>
+    <string name="AIeasy">AI on</string>
+    <string name="AIhard">AI wins</string>
     <string name="title_home">Home</string>
     <string name="title_tictac">Tic Tac Toe Game</string>
+    <string name="title_p1">Player 1: \u00A0</string>
+    <string name="title_p2">Player 2: \u00A0</string>
+    <string name="title_memo">Memory Game</string>
     <string name="title_hang">Hangman Game</string>
-    <string name="hang_letter">x\u00A0</string>
+    <string name="hang_letter">x</string>
+    <string name="hang_single">Single Player</string>
+    <string name="hang_multi">"Multi" Player</string>
+    <string name="hang_scores">Scores</string>
     <!--  \u00A0 means a single normal space  -->
     <string name="hang_alphabet">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="char4letters1">
@@ -59,5 +68,7 @@
         were, west, what, when, whom, wide, wife, wild, will, wind, wine, wing, wire,
         wise, wish, with, wood, word, wore, work, yard, yeah, year, your, zero, zone
     </string>
+    <string name="game_image">game image</string>
+    <string name="game_over">GAME OVER</string>
 
 </resources>
