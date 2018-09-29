@@ -1,6 +1,8 @@
 package com.exercises.programing.simplegames.tictactoe;
 
 public class TicPossibleMoves {
+
+    // WORK ON PROGRESS: THIS IS PART OF THE MINIMAX.
     String[][] boardState; // The state of the board at a given stage
     int score; // The score associated with the board (win = +1, lose = -1, else = 0)
     int depth; // The depth in the tree structure in which this state exists

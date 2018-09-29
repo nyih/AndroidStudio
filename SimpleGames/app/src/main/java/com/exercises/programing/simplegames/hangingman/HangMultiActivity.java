@@ -176,7 +176,9 @@ public class HangMultiActivity extends AppCompatActivity {
         }
         else{ // GAME OVER
             img.setImageResource(R.drawable.ic_gameover);
-            // Stops the player from guessing after the end, WITHOUT the need of a new screen:
+            //toastMessage("Game Over!");
+            // MAKE A WAY TO STOP PLAYER FROM GUESSING
+            // WITHOUT THE NEED FOR A NEW SCREEN:
             LinearLayout laystopguess = findViewById(R.id.layLetters);
             if(laystopguess.getChildCount() > 1) {
                 laystopguess.removeAllViews();               //clean the TextView from the letters

@@ -6,10 +6,9 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class TicAIPerfect {
-
-    private TicMainActivity board;
-    // WORK ON PROGRESS, NOT WORKING RIGHT NOW
+// WORK ON PROGRESS: TRYING TO FIGURE HOW TO DO MINIMAX
     /*
+    private TicMainActivity board;
     //ArrayList<ArrayList> scoreList  ;
     String[][] field = new String[3][3]; //know in the original as textBoard
     // The state of the board in text form
@@ -18,7 +17,7 @@ public class TicAIPerfect {
     //private int deph = 9;
     public void nextMove(TicMainActivity boardImport) {
         this.board = boardImport;
-//THE IF BELLOW MAY BE WHY THE EASY DOESN'T AUTOPLAY
+
         if (board.p1_turn){
             return;
         }

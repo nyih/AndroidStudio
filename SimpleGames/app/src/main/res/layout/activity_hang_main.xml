@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     android:background="@drawable/gradient_bg_main"
     tools:context=".hangingman.HangMainActivity">
 
@@ -11,26 +13,21 @@
         android:id="@+id/btn_top"
         android:text="@string/hang_single"
         style="@style/ButtonStyle"
-        android:layout_width="105dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btn_mid"
-        android:layout_centerInParent="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btn_mid"
         android:text="@string/hang_multi"
         style="@style/ButtonStyle"
-        android:layout_width="105dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_bot"
-        android:text="@string/hang_scores"
+        android:text="@string/scores"
         style="@style/ButtonStyle"
-        android:layout_width="105dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_mid"
-        android:layout_centerInParent="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -43,9 +43,19 @@
             android:parentActivityName=".hangingman.HangMultiplayerActivity" />
         <activity
             android:name=".hangingman.HangScoresActivity"
-            android:label="@string/title_hang"
+            android:label="@string/title_hangScore"
             android:parentActivityName=".hangingman.HangMainActivity" />
-        <activity android:name=".memory.MemoryActivity"></activity>
+        <activity
+            android:name=".memory.MemoGameActivity"
+            android:label="@string/title_memo"
+            android:parentActivityName=".memory.MemoMainActivity" />
+        <activity
+            android:name=".memory.MemoMainActivity"
+            android:label="@string/title_memo"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".memory.MemoScoresActivity"
+            android:label="@string/title_memoScore"
+            android:parentActivityName=".memory.MemoMainActivity"/>
     </application>
 
 </manifest>

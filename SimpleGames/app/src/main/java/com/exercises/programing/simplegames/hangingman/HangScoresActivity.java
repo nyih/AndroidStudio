@@ -15,9 +15,12 @@ public class HangScoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hang_scores);
 
         SharedPreferences pref =  getSharedPreferences("HANG_PREF", MODE_PRIVATE);
-        String scores = pref.getString("SCORES", "NO SCORES SAVED");
+        String scores1 = pref.getString("SCORES1", "NO NAME");
+        String scores2 = pref.getString("SCORES2", "NO SCORES SAVED");
         // the default value is displayed whenever there is no value defined
-        TextView txtview_scores = findViewById(R.id.txtview_scores);
-        txtview_scores.setText(scores);
+        TextView txtview_scores1 = findViewById(R.id.txtview_scores1);
+        txtview_scores1.setText(scores1);
+        TextView txtview_scores2 = findViewById(R.id.txtview_scores2);
+        txtview_scores2.setText(scores2);
     }
 }

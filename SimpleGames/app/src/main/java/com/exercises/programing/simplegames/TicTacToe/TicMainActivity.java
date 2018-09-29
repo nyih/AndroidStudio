@@ -146,6 +146,7 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
 
+            /*
             if (radio_AIhard.isChecked()){
                 if (p1_turn) {
                     Log.d("MYLOG", "Player 1: AI hard mode");
@@ -164,6 +165,7 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
                     Log.d("MYLOG", "Player 2 turn: " + !p1_turn);
                 }
             }
+            */
         }
 
 // Step 4 - Call the methods created on Step 3

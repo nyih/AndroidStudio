@@ -35,9 +35,11 @@ public class HangOverActivity extends AppCompatActivity {
 
         EditText edtxt = findViewById(R.id.edtxt_name);
         String name = edtxt.getText().toString();
-        String prevScores = pref.getString("SCORES", "");
+        String prevScores = pref.getString("SCORES1", "");
+        String prevScores2 = pref.getString("SCORES2", "");
 
-        editor.putString("SCORES", name+" "+pontuation+" POINTS \n"+prevScores);
+        editor.putString("SCORES1", name+"\n"+prevScores);
+        editor.putString("SCORES2", pontuation+"\n"+prevScores2);
         editor.apply();
         //apply is same as commit but do it in the background instead of immediately
 

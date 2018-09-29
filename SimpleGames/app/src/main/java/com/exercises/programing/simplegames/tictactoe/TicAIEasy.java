@@ -35,7 +35,7 @@ public class TicAIEasy {
     } //close method
 
 
-
+//-------------------------TRY TO WIN-------------------------
     private void trywin() {
         String[][] field = new String[3][3];
         Log.d("MY LOG", "INSIDE TRY TO WIN");
@@ -154,7 +154,7 @@ public class TicAIEasy {
     }
 
 
-
+//-------------------------DEFEND-------------------------
     private void defend() {
 
         Log.d("MY LOG", "INSIDE DEFENCE");
@@ -181,9 +181,10 @@ public class TicAIEasy {
             if (field[i][0] != null && field[i][0].equals(field[i][1])
                     // AND i0 is NOT empty
                     && field[i][0].equals("X")
-                    // AND i2 (the last button of any line) is empty
+                    // AND i2 (the last button of any line) is X
                     && field[i][2].isEmpty()) {
                 board.buttons[i][2].setText("O");
+                // mark that space O
                 board.changeTurn();
                 Log.d("MY LOG", "DEFEND 1st If is btn" + i + "2");
                 Log.d("MY LOG", "Player 1 = " + board.p1_turn);
@@ -292,7 +293,7 @@ public class TicAIEasy {
     }
 
 
-
+//-------------------------RANDOM MOVE-------------------------
     private void randomMove() {
         Random r = new Random();
         //int pts = r.nextInt(max - min + 1) + min;

@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/memo_square"
+    android:height="@dimen/memo_square"
+    android:viewportWidth="@dimen/memo_square_viewport"
+    android:viewportHeight="@dimen/memo_square_viewport">
+  <path
+      android:pathData="m26.1447,31.0257 l-9.0798,-7.6741 -9.4613,8.1214 4.2122,-11.4053 -10.2982,-6.8594 11.6831,0.6253 3.0966,-12.3607 3.0083,11.7917 12.212,-0.7799 -9.8238,6.6624z"
+      android:fillColor="@color/colorPrimaryLight"
+      android:strokeLineCap="round"/>
+</vector>

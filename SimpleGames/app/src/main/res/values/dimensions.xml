@@ -9,4 +9,6 @@
     <dimen name="pad25">25dp</dimen>
     <dimen name="square">85dp</dimen>
     <dimen name="minisquare">65dp</dimen>
+    <dimen name="memo_square">50dp</dimen>
+    <dimen name="memo_square_viewport">35</dimen>
 </resources>

@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import com.exercises.programing.simplegames.tictactoe.TicMainActivity;
 import com.exercises.programing.simplegames.hangingman.HangMainActivity;
-//import com.exercises.programing.simplegames.memory.MemoryActivity;
+import com.exercises.programing.simplegames.memory.MemoMainActivity;
+import com.exercises.programing.simplegames.tictactoe.TicMainActivity;
 
+/**
+ * Created by Carla on 21-08-2018.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -35,10 +38,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_home:
-                Intent gohome=new Intent(this, MainActivity.class);
-                startActivity(gohome);
-                return true;
             case R.id.nav_tictac:
                 Intent gotodo=new Intent(this, TicMainActivity.class);
                 startActivity(gotodo);
@@ -47,12 +46,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent gohang=new Intent(this, HangMainActivity.class);
                 startActivity(gohang);
                 return true;
-                /*
             case R.id.nav_memo:
-                Intent gomemo=new Intent(this, MemoryActivity.class);
+                Intent gomemo=new Intent(this, MemoMainActivity.class);
                 startActivity(gomemo);
                 return true;
-                */
         }
         return false;
     }

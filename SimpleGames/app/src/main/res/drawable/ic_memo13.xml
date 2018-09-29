@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/memo_square"
+    android:height="@dimen/memo_square"
+    android:viewportWidth="@dimen/memo_square_viewport"
+    android:viewportHeight="@dimen/memo_square_viewport">
+  <path
+      android:fillColor="@color/colorPrimaryLight"
+      android:pathData="M16.4982,2.7125C2.1344,2.6543 19.626,3.3215 12.4499,15.4544C5.2516,27.6248 -4.0068,13.0927 3.1455,25.2889C10.2758,37.4474 2.1223,22.3433 16.4863,22.3366C30.8948,22.3299 22.6171,37.4143 29.8731,25.2765C37.1067,13.1762 27.7686,27.6136 20.5807,15.4874C13.3705,3.3237 30.9066,2.7709 16.4982,2.7125z"
+      android:fillAlpha="0.99215686"/>
+</vector>

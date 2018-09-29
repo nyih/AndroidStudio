@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/gradient_bg_main"
+    tools:context=".memory.MemoGameActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtview_memotime_ph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/memo_time"
+        android:textSize="@dimen/txt_size"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_margin="@dimen/margin"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:id="@+id/txtview_memotimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/margin"
+        android:layout_toEndOf="@+id/txtview_memotime_ph"
+        android:layout_toRightOf="@+id/txtview_memotime_ph"
+        android:text="00"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="@dimen/txt_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtview_memoscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:freezesText="true"
+        android:text="@string/scores"
+        android:textSize="@dimen/txt_size"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_margin="@dimen/margin"
+        android:layout_toLeftOf="@id/btn_save"
+        android:layout_toStartOf="@id/btn_save" />
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/txtview_memoscore"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/save"/>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/txtview_memotimer"
+    android:layout_marginTop="@dimen/padding">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <GridLayout
+            android:id="@+id/gridlay_allimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            android:columnWidth="50dp"
+            android:columnCount="6"
+            android:rowCount="6">
+            <!--
+                    android:layout_gravity="center"
+                    makes it centered by the center of the layout
+                    -->
+            </GridLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+</RelativeLayout>

@@ -57,7 +57,7 @@ public class HangGameActivity extends AppCompatActivity {
 
     public void checkLetter(String insertedLetter){
         char charInserted = insertedLetter.toUpperCase().charAt(0);
-        // character inserted (in this case letters)
+        //character inserted (in this case letters)
         // the inserted letter is changed to UpperCase so the user will get points for the
         // right letters despite being upper or lowercase
         // charAt is needed so the app is able to search inside the words for the letters,
@@ -89,9 +89,11 @@ public class HangGameActivity extends AppCompatActivity {
                         //that is only set inside this if to make other conditions work
                         Log.d("MYLOG", "Repeated: " + repeated);
                         toastMessage("This letter was already scored");
+                        Log.d("MYLOG", "already guessed " + current_letter);
 //THIS HERE IS BEING REPEATED SEVERAL TIMES WHEN THE WORD HAS REPEATED LETTERS:
 // x² -> if 2 R in the word, Toast appears 4 times. if 3 A in a word, Toast appears 9 times.
-// 1 for each letter repeated times 1 for each space the letter is present, I suppose
+// 1 for each letter repeated times 1 for each space the letter is present, I suppose -> kind of solved
+// now repeats only the same amount of times the letter is repeated. if 3 A in a word, Toast 3 times
                             Log.d("MYLOG", "current letter repeated: " + current_letter);
                             break;
                     }
@@ -165,7 +167,7 @@ public class HangGameActivity extends AppCompatActivity {
         txtviewFailled.setText("");
         guessedcounter=0;
         failcounter=0;
-        // Makes every letter inside layLetters x again:
+// Make every letter inside layLetters x again:
         for (int i=0; i < layLetters.getChildCount(); i++){
             TextView current_txtview = (TextView) layLetters.getChildAt(i);
             current_txtview.setText("x ");
@@ -235,8 +237,6 @@ public class HangGameActivity extends AppCompatActivity {
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 
-
-
     //Make sure the player won't lose progress in the game when changing from landscape to
     //portrait view and vice versa
     @Override
@@ -272,7 +272,7 @@ public class HangGameActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         gameWord = savedInstanceState.getString("gameWord");
-        //works if we have a n if in the onCreate
+        //works after if in the onCreate
         txtfailed = savedInstanceState.getCharSequence("txtfailed");
         Log.d("MYLOG", "restored charsequence: "+txtfailed);
         TextView viewFailed = findViewById(R.id.txtview_guess);

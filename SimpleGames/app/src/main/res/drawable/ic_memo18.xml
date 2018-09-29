@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/memo_square"
+    android:height="@dimen/memo_square"
+    android:viewportWidth="@dimen/memo_square_viewport"
+    android:viewportHeight="@dimen/memo_square_viewport">
+  <path
+      android:fillColor="@color/colorPrimaryLight"
+      android:pathData="m15.1164,2.5502c-20.2644,5.9471 -1.0804,37.132 6.7435,24.7127 3.7316,-5.9693 6.2569,-14.7706 1.9484,-21.055 -2.0082,-2.6199 -5.3968,-4.1308 -8.6919,-3.6577zM18.8071,4.177c4.6949,-0.8736 1.0812,7.6841 -1.0142,2.8279 -2.5885,0.9737 -10.4875,2.7518 -4.449,-1.1702 1.7214,-0.8388 3.6052,-1.2484 5.4633,-1.6577zM16.615,10.7228c4.6141,3.9585 6.9316,14.2777 -2.3202,12.8618 -5.7667,-1.8888 -4.7077,-10.4691 1.5132,-10.607 0.6613,-0.5463 0.9428,-1.4337 0.8069,-2.2548z" />
+</vector>
