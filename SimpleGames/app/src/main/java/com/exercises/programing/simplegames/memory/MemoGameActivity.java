@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,7 +34,7 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
     private  MemoButton[] allBtn;
     private int [] gameImgs, ImgsPositions; //random all the location
     private boolean isBusy = false;
-//for the sake of differentiating intent variables from other variables, intent's are in UPPERCASE:
+// for the sake of differentiating intent variables from other variables, intent's are in UPPERCASE:
     final String ROW_LVL = "ROW_LVL", COL_LVL = "COL_LVL", FOR_TIMER = "FOR_TIMER";
     private TextView timer_txt, pointScore;
     private MemoTimer timer;
@@ -84,12 +86,16 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
 ////////////////////////////////////////////////////////////////////////
         btn_save = findViewById(R.id.btn_save);
         btn_save.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 // create the editText that will receive input
                 final EditText itemEditText = new EditText(MemoGameActivity.this);
+                itemEditText.setTextColor(getResources().getColor
+                        (R.color.colorMint, getResources().newTheme()));
                 // create popup alert
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MemoGameActivity.this)
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder
+                        (MemoGameActivity.this, R.style.AlertDialogStyle)
                         .setTitle("Save Score")
                         .setMessage("Insert your name");
                 // it's possible to set the information inside the alert by not closing the statement
@@ -103,12 +109,15 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
                                         //CREATE SHARED PREFERENCES
-                                        SharedPreferences pref = getSharedPreferences("MEMO_PREF", Context.MODE_PRIVATE);
+                                        SharedPreferences pref = getSharedPreferences
+                                                ("MEMO_PREF", Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = pref.edit();
                                         // get user input and set it to result
                                         String name = itemEditText.getText().toString();
-                                        String prevScores = pref.getString("MEMO_SCORES1", "");
-                                        String prevScores2 = pref.getString("MEMO_SCORES2", "");
+                                        String prevScores = pref.getString
+                                                ("MEMO_SCORES1", "");
+                                        String prevScores2 = pref.getString
+                                                ("MEMO_SCORES2", "");
 
                                         editor.putString("MEMO_SCORES1", name+"\n"+prevScores);
                                         editor.putString("MEMO_SCORES2", punctuation+"\n"+prevScores2);
@@ -195,9 +204,7 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
 
     private void putGameImgs() {
         if (numPairs >8){
-            Toast.makeText(MemoGameActivity.this,
-                    "Please scroll up and down and sideways to make sure you see all the game",
-                    Toast.LENGTH_LONG).show();
+            toastMessage("Please scroll up and down and sideways to make sure you see all the game", Toast.LENGTH_LONG);
         }
         for (int i = 0, j = 1; i< numPairs; i++, j++) {
             String imgID = "ic_memo" + j;
@@ -214,6 +221,8 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
         for (int i = 0; i < numElements; i++) {
             if (allBtn[i].isEnabled()) {
                 return false;
+                // this method is a boolean so it need to return true or false,
+                // it's also what we use on onClick to check if the player got all the pairs
             }
         }
         return true;
@@ -222,7 +231,7 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
     //When time is out, this is our game over
     @TargetApi(Build.VERSION_CODES.M)
     public void timeOut() {
-        Toast.makeText(MemoGameActivity.this, "Time up", Toast.LENGTH_LONG).show();
+        toastMessage("Time up!", Toast.LENGTH_LONG);
 // This cleans the grid layout so the player wont be able to do anything
 // (another option it would be to freeze the cards, not allowing clicks)
         gridLay.removeAllViewsInLayout();
@@ -246,18 +255,24 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
     @Override
     public void onClick(View view) {
         if(isBusy){
-            return;
+            return; // it prevents the game from having more than 2 cards displayed at all times
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // why do I need to have an empty return?
+            // I suppose the empty return work like the break inside a loop,
+            // preventing the rest of the code in the method to run
+            // Which is also the reason this needs to be the 1st if of the onClick
+            ///////////////////////////////////////////////////////////////////////////////////////
         }
         MemoButton button = (MemoButton) view;
-        if(button.isMatched){
-            return;
-        }
         if(selectBtn1 == null){
+            // if the selected button is not empty
             selectBtn1 = button;
-            selectBtn1.flip(); // reminder: flip() is a method inside the MemoButton class
-            return;
+            // the selected button is the view
+            selectBtn1.flip();
+            // call the method flip() inside the MemoButton class to show the card
         }
         if(selectBtn1.getId() == button.getId()){
+            // if the selected button is clicked twice, return (do nothing)
             return;
         }
         if(selectBtn1.getFrontImgID() == button.getFrontImgID()){
@@ -275,8 +290,7 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
                 MemoGameActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MemoGameActivity.this,
-                                "Winner", Toast.LENGTH_LONG).show();
+                        toastMessage("You won!", Toast.LENGTH_SHORT);
 // Give different bonus points if the player won in less than half of the time or more than half
                        int timeLeft = Integer.valueOf(timer_txt.getText().toString());
                         Log.d("MYLOG", "timeLeft is: "+timer_txt.getText().toString());
@@ -317,8 +331,7 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
 
 // This method clears the grid layout and recreate the game inside it
     public void clearScreen() {
-        Toast.makeText(MemoGameActivity.this,
-                "Shuffling the cards", Toast.LENGTH_LONG).show();
+        toastMessage("Shuffling the cards", Toast.LENGTH_LONG);
         Handler tempHandler = new Handler();
         tempHandler.postDelayed(new Runnable() {
             @Override
@@ -339,10 +352,28 @@ public class MemoGameActivity extends AppCompatActivity implements  View.OnClick
                     Log.d("MYLOG","numCol = "+numCol);
                 }
             }
-        }, 4500);
+        }, 4000);
     }
+
+    //This method personalizes the Toast message
+    @TargetApi(Build.VERSION_CODES.M)
+    private void toastMessage(String message, int duration){
+        Toast toast = Toast.makeText(this, message, duration);
+        View view = toast.getView();
+
+//Gets the actual oval background of the Toast then sets the colour filter
+        view.getBackground().setColorFilter(getResources().getColor
+                (R.color.colorPrimaryOld, getResources().newTheme()), PorterDuff.Mode.SRC_IN);
+//Gets the TextView from the Toast so it can be edited
+        TextView text = view.findViewById(android.R.id.message);
+        text.setTextColor(Color.WHITE);
+//The most important part, display the Toast
+        toast.show();
+    }
+
 
     ////////////////////////////////////////////////////////////////
     ////////// Try to figure a way to use the onSaveInstanceState
-    ////////// and onRestoreInstanceState if the cards
+    ////////// and onRestoreInstanceState with the cards
+    ////////// MAYBE TRY TO SAVE THE BOARD MATRIX? 
 }

@@ -5,8 +5,10 @@
     <dimen name="txt_radio">18sp</dimen>
     <dimen name="txt_padding">5sp</dimen>
     <dimen name="margin">5dp</dimen>
+    <dimen name="marg75">75dp</dimen>
     <dimen name="padding">10dp</dimen>
     <dimen name="pad25">25dp</dimen>
+    <dimen name="pad50">50dp</dimen>
     <dimen name="square">85dp</dimen>
     <dimen name="minisquare">65dp</dimen>
     <dimen name="memo_square">50dp</dimen>

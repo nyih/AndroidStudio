@@ -27,19 +27,17 @@
             android:label="@string/title_hang"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".hangingman.HangGameActivity"
-            android:parentActivityName=".hangingman.HangMainActivity" />
-        <activity
             android:name=".hangingman.HangOverActivity"
-            android:label="@string/title_hang"
+            android:label="@string/game_over"
             android:parentActivityName=".hangingman.HangMainActivity" />
         <activity
             android:name=".hangingman.HangMultiplayerActivity"
             android:label="@string/title_hang"
             android:parentActivityName=".hangingman.HangMainActivity" />
         <activity
-            android:name=".hangingman.HangMultiActivity"
+            android:name=".hangingman.HangGameActivity"
             android:label="@string/title_hang"
+            android:configChanges="screenSize"
             android:parentActivityName=".hangingman.HangMultiplayerActivity" />
         <activity
             android:name=".hangingman.HangScoresActivity"

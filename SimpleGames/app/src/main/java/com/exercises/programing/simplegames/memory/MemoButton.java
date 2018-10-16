@@ -47,9 +47,6 @@ public class MemoButton extends AppCompatButton {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void flip(){
-        if(isMatched){
-            return;
-        }
         if(isFlipped){
             setBackground(back);
             isFlipped = false;

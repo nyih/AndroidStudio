@@ -15,7 +15,7 @@
     <string name="title_memoScore">Memory Game Scores</string>
     <string name="title_hang">Hangman Game</string>
     <string name="title_hangScore">Hangman Game Scores</string>
-    <string name="hang_letter">x</string>
+    <string name="hang_letter">_</string>
     <string name="hang_single">Single Player</string>
     <string name="hang_multi">"Multi" Player</string>
     <string name="scores">Scores</string>

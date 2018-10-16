@@ -21,9 +21,10 @@ public class HangMultiplayerActivity extends AppCompatActivity {
         String gameWord = edtext.getText().toString();
         edtext.setText("");
 
-        Intent multIntent = new Intent(this, HangMultiActivity.class);
+        Intent multIntent = new Intent(this, HangGameActivity.class);
         multIntent.putExtra("WORD_ID", gameWord);
-        //the putExtra is what sends the info (gameWord) to the HangMultiActivity
+        //the putExtra is what sends the info (gameWord) to the HangGameActivity
+        multIntent.putExtra("MULTIPLAYER", true);
         startActivity(multIntent);
 
     }

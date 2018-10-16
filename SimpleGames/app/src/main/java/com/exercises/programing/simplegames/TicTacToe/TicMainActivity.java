@@ -1,5 +1,9 @@
 package com.exercises.programing.simplegames.tictactoe;
 
+import android.annotation.TargetApi;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -136,13 +140,15 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
                 // methods don't work properly.
                 // For some reason, if using else instead of if !(not)p1_turn, the autoplay doesn't run.
                 if (!p1_turn)  {
-                    roundCount++;
-                    Log.d("MYLOG", "O Round: " + roundCount);
-                    Log.d("MYLOG", "Player 2: AI mode");
-                    aiEasy.nextMove(this);
-                    Log.d("MYLOG", "main Player 2 turn: " + !p1_turn);
-                    //changeTurn(); //it makes odd stuff and already have inside the random working
-                    //Log.d("MYLOG", "main Player 2 turn: " + !p1_turn);
+                    if (roundCount<9) {
+                        Log.d("MYLOG", "Player 2: AI mode");
+                        aiEasy.nextMove(this);
+                        roundCount++;
+                        Log.d("MYLOG", "O Round: " + roundCount);
+                        Log.d("MYLOG", "main Player 2 turn: " + !p1_turn);
+                        //changeTurn(); //it makes odd stuff and already have inside the random working
+                        //Log.d("MYLOG", "main Player 2 turn: " + !p1_turn);
+                    }
                 }
             }
 
@@ -184,7 +190,7 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
             // and 1 space is filled each turn, also, it'd impossible to win in the 9th turn,
             // you get to that point because no one was able to win.
             draw();
-        }
+        } // closes else if
     }
     // Step 8 - Because we need to change turn from the AI, we create this method
     public void changeTurn() {
@@ -203,17 +209,14 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
 
     // Step 3
     public boolean checkForWin() {
-
         String[][] field = new String[3][3];
         //Just like it was done for the buttons, the String fields will receive bellow different
         //information for each time the loop runs.
-
         for (int i=0; i<3; i++) {
             for (int j = 0; j<3; j++) {
                 field[i][j] = buttons[i][j].getText().toString();
                 //In this case, field will receive the letters associated with [i][j], X or O.
             }
-
             //if i0 (the 1st button of any line) equals the button next to it
             if (field[i][0].equals(field[i][1])
                     //AND (&& means that the code after it must also be true)
@@ -251,10 +254,10 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
 // Step 5 - Add Toasts to be a visual feedback of why the board is being resetted
 // and update the players points (or not if it's a draw)
     protected void p1_wins(){
-                p1_points++;
-                updatePointsText();
-                resetBoard();
-        Toast.makeText(this, "Player 1 wins!", LENGTH_SHORT).show();
+        p1_points++;
+        updatePointsText();
+        resetBoard();
+        toastMessage("Player 1 wins!");
         Log.d("MYLOG", "---------------------------------------Player 1 Wins");
     }
 
@@ -266,13 +269,13 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
             updatePointsText();
             resetBoard();
         }}, 1000); //Allow the player to be able to see how he/she/it lost
-        Toast.makeText(this, "Player 2 wins!", LENGTH_SHORT).show();
+        toastMessage("Player 2 wins!");
         Log.d("MYLOG", "---------------------------------------Player 2 Wins");
         //OBS: Apparently Toasts cannot be displayed inside Runnables
     }
 
     private void draw(){
-        Toast.makeText(this, "It's a draw!", Toast.LENGTH_LONG).show();
+        toastMessage("It's a draw!");
         resetBoard();
     }
 
@@ -289,6 +292,7 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
         }
         roundCount=0;
         Log.d("MYLOG", "Reset Round: " + roundCount);
+        changeTurn(); // prevent AI from playing without counting the round
     }
 
     private void resetGame(){
@@ -298,16 +302,34 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
         resetBoard();
     }
 
+    //This method personalizes the Toast message
+    @TargetApi(Build.VERSION_CODES.M)
+    private void toastMessage(String message){
+        Toast toast = Toast.makeText(this, message,  Toast.LENGTH_SHORT);
+        View view = toast.getView();
+
+//Gets the actual oval background of the Toast then sets the colour filter
+        view.getBackground().setColorFilter(getResources().getColor
+                (R.color.colorPrimaryOld, getResources().newTheme()), PorterDuff.Mode.SRC_IN);
+//Gets the TextView from the Toast so it can be edited
+        TextView text = view.findViewById(android.R.id.message);
+        text.setTextColor(Color.WHITE);
+//The most important part, display the Toast
+        toast.show();
+    }
+
 // Step 6 - Make sure the game doesn't reset when the orientation changes
 // Ctrl+o, chose the methods onSaveInstanceState and onRestoreInstanceState
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
+// There is no text from the buttons being saved here because the freezesText
+// on the Layout takes care of it. An alternative for it would be to save the matrix.
         outState.putInt("roundCount", roundCount);
         outState.putInt("p1_points", p1_points);
         outState.putInt("p2_points", p2_points);
         outState.putBoolean("p1_turn", p1_turn);
+        outState.putBoolean("startGame", startGame);
     }
 
     @Override
@@ -318,5 +340,6 @@ public class TicMainActivity extends AppCompatActivity implements View.OnClickLi
         p1_points = savedInstanceState.getInt("p1_points");
         p2_points = savedInstanceState.getInt("p2_points");
         p1_turn = savedInstanceState.getBoolean("p1_turn");
+        startGame = savedInstanceState.getBoolean("startGame");
     }
 }
